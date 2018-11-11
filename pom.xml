@@ -22,6 +22,24 @@
             <version>8.0.4</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.datafx</groupId>
+            <artifactId>flow</artifactId>
+            <version>8.0b7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.datafx</groupId>
+            <artifactId>datafx</artifactId>
+            <version>8.0b7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.datafx</groupId>
+            <artifactId>core</artifactId>
+            <version>8.0b7</version>
+        </dependency>
+
     </dependencies>
     
 </project>
