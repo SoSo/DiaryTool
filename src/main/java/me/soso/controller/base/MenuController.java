@@ -10,12 +10,10 @@ import io.datafx.controller.flow.context.ViewFlowContext;
 import io.datafx.controller.util.VetoException;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import me.soso.config.module.Module;
-import me.soso.config.module.ModulesLoader;
 import me.soso.config.module.XmlModulesLoader;
 
 import javax.annotation.PostConstruct;
@@ -24,6 +22,7 @@ import java.util.Objects;
 
 @FXMLController(value = "/fxml/base/SideMenu.fxml")
 public class MenuController {
+
     @FXMLViewFlowContext
     private ViewFlowContext context;
 
@@ -54,7 +53,7 @@ public class MenuController {
         Flow contentFlow = (Flow) context.getRegisteredObject("ContentFlow");
         try {
             XmlModulesLoader loader = new XmlModulesLoader();
-            loader.loadModules("/config/moduleConfig.xml");
+            loader.loadModules("config/moduleConfig.xml");
             List<Module> modules = loader.getModuleList();
             ObservableList<Label> labelList = FXCollections.observableArrayList();
             for (Module module : modules) {
@@ -69,4 +68,9 @@ public class MenuController {
             System.out.println(e.getMessage());
         }
     }
+
+    public void setContext(ViewFlowContext context) {
+        this.context = context;
+    }
+
 }

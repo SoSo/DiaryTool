@@ -5,39 +5,83 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Button layoutX="278.0" layoutY="351.0" mnemonicParsing="false" text="添加" />
-      <Label layoutX="61.0" layoutY="218.0" text="日期" />
-      <TextField layoutX="352.0" layoutY="213.0" prefHeight="27.0" prefWidth="48.0" />
-      <TreeTableView layoutX="61.0" layoutY="20.0" prefHeight="172.0" prefWidth="479.0">
-        <columns>
-          <TreeTableColumn prefWidth="75.0" text="日期" />
-          <TreeTableColumn prefWidth="75.0" text="运动(-5~5)" />
-          <TreeTableColumn prefWidth="110.0" text="上班投入(-10-10)" />
-          <TreeTableColumn prefWidth="75.0" text="学习(-5-5)" />
-          <TreeTableColumn prefWidth="110.0" text="浏览新闻(-3-3)" />
-          <TreeTableColumn minWidth="75.0" prefWidth="6.0" text="LOL(-5~5)" />
-          <TreeTableColumn prefWidth="75.0" text="早睡(-3~3)" />
-          <TreeTableColumn prefWidth="75.0" text="规律饮食作息(-2~2)" />
-          <TreeTableColumn prefWidth="75.0" text="总分" />
-        </columns>
-      </TreeTableView>
-      <DatePicker layoutX="106.0" layoutY="213.0" prefHeight="27.0" prefWidth="155.0" />
-      <Label layoutX="278.0" layoutY="218.0" text="运动(-5-5)" />
-      <Label layoutX="61.0" layoutY="261.0" text="上班投入(-10-10)" />
-      <TextField layoutX="174.0" layoutY="256.0" prefHeight="27.0" prefWidth="48.0" />
-      <Label layoutX="419.0" layoutY="218.0" text="学习(-5-5)" />
-      <TextField layoutX="493.0" layoutY="213.0" prefHeight="27.0" prefWidth="48.0" />
-      <Label layoutX="244.0" layoutY="261.0" text="浏览新闻(-3-3)" />
-      <TextField layoutX="344.0" layoutY="256.0" prefHeight="27.0" prefWidth="48.0" />
-      <Label layoutX="416.0" layoutY="261.0" text="LOL(-5~5)" />
-      <TextField layoutX="491.0" layoutY="256.0" prefHeight="27.0" prefWidth="48.0" />
-      <TextField layoutX="140.0" layoutY="298.0" prefHeight="27.0" prefWidth="48.0" />
-      <Label layoutX="61.0" layoutY="303.0" text="早睡(-3~3)" />
-      <Label layoutX="232.0" layoutY="303.0" text="规律饮食作息(-2~2)" />
-      <TextField layoutX="360.0" layoutY="298.0" prefHeight="27.0" prefWidth="48.0" />
-      <TextField layoutX="491.0" layoutY="298.0" prefHeight="27.0" prefWidth="48.0" />
-      <Label layoutX="455.0" layoutY="303.0" text="总分" />
-   </children>
-</Pane>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import com.jfoenix.controls.JFXTreeTableColumn?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.validation.RequiredFieldValidator?>
+<?import com.jfoenix.validation.NumberValidator?>
+<?import javafx.scene.shape.Box?>
+<?import com.jfoenix.controls.JFXButton?>
+<StackPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1"
+           xmlns="http://javafx.com/javafx/2.2">
+    <SplitPane dividerPositions="50" orientation="VERTICAL">
+
+        <JFXTreeTableView fx:id="treeTableView" minHeight="200" maxHeight="300" prefHeight="300">
+            <columns>
+                <JFXTreeTableColumn fx:id="date"
+                                    minWidth="150" text="日期"
+                                    resizable="false" />
+                <JFXTreeTableColumn fx:id="exercise"
+                                    minWidth="75" text="运动"
+                                    resizable="false" />
+                <JFXTreeTableColumn fx:id="work"
+                                    minWidth="75" text="上班投入"
+                                    resizable="false" />
+                <JFXTreeTableColumn fx:id="learn"
+                                    minWidth="75" text="学习"
+                                    resizable="false" />
+                <JFXTreeTableColumn fx:id="readNews"
+                                    minWidth="75" text="浏览新闻"
+                                    resizable="false" />
+                <JFXTreeTableColumn fx:id="LOL"
+                                    minWidth="75" text="LOL"
+                                    resizable="false" />
+                <JFXTreeTableColumn fx:id="sleep"
+                                    minWidth="75" text="早睡"
+                                    resizable="false" />
+                <JFXTreeTableColumn fx:id="eat"
+                                    minWidth="75" text="规律饮食"
+                                    resizable="false" />
+                <JFXTreeTableColumn fx:id="total"
+                                    minWidth="75" text="总分"
+                                    resizable="false" />
+            </columns>
+        </JFXTreeTableView>
+
+        <VBox alignment="CENTER">
+            <children>
+                <HBox prefHeight="50">
+                    <JFXDatePicker fx:id="datePicker" promptText="日期" />
+
+                    <JFXTextField fx:id="exerciseTextField" promptText="运动(-5-5)" alignment="CENTER" />
+
+                    <JFXTextField fx:id="workTextField" promptText="上班投入(-5-5)" alignment="CENTER" />
+                </HBox>
+
+                <HBox prefHeight="50">
+                    <JFXTextField fx:id="learnTextField" promptText="学习(-5-5)" alignment="CENTER" />
+
+                    <JFXTextField fx:id="readNewsTextField" promptText="浏览新闻(-3-3)" alignment="CENTER" />
+
+                    <JFXTextField fx:id="LOLTextField" promptText="LOL(-5~5)" alignment="CENTER" />
+                </HBox>
+
+                <HBox prefHeight="50">
+                    <JFXTextField fx:id="sleepTextField" promptText="早睡(-3-3)" alignment="CENTER" />
+
+                    <JFXTextField fx:id="eatTextField" promptText="规律饮食(-2-2)" alignment="CENTER" />
+
+                    <Label>总分：</Label>
+                    <Label fx:id="totalLabel">0</Label>
+                </HBox>
+
+                <JFXButton prefWidth="80" prefHeight="40" buttonType="RAISED" text="提交"
+                           styleClass="custom-jfx-button-raised" onMouseClicked="#submit" />
+            </children>
+        </VBox>
+
+    </SplitPane>
+
+</StackPane>

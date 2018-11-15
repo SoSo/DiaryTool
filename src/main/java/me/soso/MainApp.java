@@ -38,15 +38,7 @@ public class MainApp extends Application {
         decorator.setCustomMaximize(true);
         decorator.setGraphic(new SVGGlyph(""));
 
-        double width = applicationWidth;
-        double height = applicationHeight;
-        try {
-            Rectangle2D bounds = Screen.getScreens().get(0).getBounds();
-            width = bounds.getWidth() / 2.5;
-            height = bounds.getHeight() / 1.35;
-        } catch (Exception e){ }
-
-        Scene scene = new Scene(decorator, width, height);
+        Scene scene = new Scene(decorator, applicationWidth, applicationHeight);
         final ObservableList<String> stylesheets = scene.getStylesheets();
         stylesheets.addAll(this.getClass().getResource("/css/jfoenix-fonts.css").toExternalForm(),
                 this.getClass().getResource("/css/jfoenix-design.css").toExternalForm(),

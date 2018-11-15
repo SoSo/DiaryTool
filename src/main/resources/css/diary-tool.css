@@ -1023,6 +1023,7 @@
 .jfx-date-picker > .jfx-text-field,
 .jfx-time-picker > .jfx-text-field{
     -jfx-focus-color: -jfx-default-color;
+    -fx-font: 15px "Arial";
 }
 
 
