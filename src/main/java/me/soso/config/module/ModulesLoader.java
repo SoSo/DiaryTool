@@ -1,5 +1,7 @@
 package me.soso.config.module;
 
+import java.util.List;
+
 public interface ModulesLoader {
-    public void loadModules(String location) throws Exception;
+    public List<Module> loadModules(String location) throws Exception;
 }

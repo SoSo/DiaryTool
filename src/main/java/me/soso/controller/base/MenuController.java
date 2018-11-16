@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import me.soso.config.ApplicationConfig;
 import me.soso.config.module.Module;
 import me.soso.config.module.XmlModulesLoader;
 
@@ -52,9 +53,7 @@ public class MenuController {
 
         Flow contentFlow = (Flow) context.getRegisteredObject("ContentFlow");
         try {
-            XmlModulesLoader loader = new XmlModulesLoader();
-            loader.loadModules("config/moduleConfig.xml");
-            List<Module> modules = loader.getModuleList();
+            List<Module> modules = ApplicationConfig.shareInstance().getModules();
             ObservableList<Label> labelList = FXCollections.observableArrayList();
             for (Module module : modules) {
                 Label label = new Label();

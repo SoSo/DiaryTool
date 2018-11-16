@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <modules>
-    <module class="me.soso.controller.module.DailyQOLController" title="习惯评分" id="dailyQOL">
+    <module class="me.soso.controller.module.DailyScoreController" title="习惯决定命运" id="dailyScore">
     </module>
 </modules>

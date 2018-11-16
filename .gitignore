@@ -39,3 +39,4 @@ libs/*
 .project
 JFoenix.eml
 target/
+src/main/resources/config/leancloud.properties

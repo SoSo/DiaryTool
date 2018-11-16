@@ -12,6 +12,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import me.soso.config.ApplicationConfig;
 import me.soso.controller.base.MainController;
 
 public class MainApp extends Application {
@@ -22,7 +23,8 @@ public class MainApp extends Application {
     final private double applicationWidth = 800;
     final private double applicationHeight = 600;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        ApplicationConfig.load();
         launch(args);
     }
 

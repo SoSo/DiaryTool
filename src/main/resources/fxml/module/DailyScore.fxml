@@ -14,6 +14,7 @@
 <?import com.jfoenix.validation.NumberValidator?>
 <?import javafx.scene.shape.Box?>
 <?import com.jfoenix.controls.JFXButton?>
+<?import java.util.ArrayList?>
 <StackPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1"
            xmlns="http://javafx.com/javafx/2.2">
     <SplitPane dividerPositions="50" orientation="VERTICAL">
@@ -81,6 +82,18 @@
                            styleClass="custom-jfx-button-raised" onMouseClicked="#submit" />
             </children>
         </VBox>
+
+        <fx:define>
+            <ArrayList fx:id="textFieldList">
+                <fx:reference source="exerciseTextField"/>
+                <fx:reference source="workTextField"/>
+                <fx:reference source="learnTextField"/>
+                <fx:reference source="readNewsTextField"/>
+                <fx:reference source="LOLTextField"/>
+                <fx:reference source="sleepTextField"/>
+                <fx:reference source="eatTextField"/>
+            </ArrayList>
+        </fx:define>
 
     </SplitPane>
 

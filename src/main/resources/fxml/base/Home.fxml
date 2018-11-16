@@ -9,6 +9,6 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button layoutX="285.0" layoutY="207.0" mnemonicParsing="false" onMouseClicked="#buttonTap" text="Button" />
+      <Button layoutX="285.0" layoutY="207.0" mnemonicParsing="false" text="Button" />
    </children>
 </AnchorPane>

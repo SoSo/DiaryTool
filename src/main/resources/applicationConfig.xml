@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configs>
+    <modules path="config/moduleConfig.xml">
+    </modules>
+
+    <database path="config/leancloud.properties" type="leanStorage">
+    </database>
+</configs>
