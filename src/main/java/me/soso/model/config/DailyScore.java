@@ -3,9 +3,12 @@ package me.soso.model.config;
 import com.avos.avoscloud.AVClassName;
 import com.avos.avoscloud.AVObject;
 
+import java.util.Date;
+
 @AVClassName(value = "DailyScore")
 public class DailyScore extends AVObject {
 
+    public static final String DATE = "date";
     public static final String EXERCISE = "exercise";
     public static final String WORK = "work";
     public static final String STUDY = "study";
@@ -13,6 +16,14 @@ public class DailyScore extends AVObject {
     public static final String LOL = "lol";
     public static final String SLEEP = "sleep";
     public static final String DIET = "diet";
+
+    public Date getDate() {
+        return getDate(DATE);
+    }
+
+    public void setDate(Date date) {
+        put(DATE, date);
+    }
 
     public int getExercise() {
         return getInt(EXERCISE);

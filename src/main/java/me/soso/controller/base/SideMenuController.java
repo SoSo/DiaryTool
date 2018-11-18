@@ -15,14 +15,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import me.soso.config.ApplicationConfig;
 import me.soso.config.module.Module;
-import me.soso.config.module.XmlModulesLoader;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Objects;
 
 @FXMLController(value = "/fxml/base/SideMenu.fxml")
-public class MenuController {
+public class SideMenuController {
 
     @FXMLViewFlowContext
     private ViewFlowContext context;

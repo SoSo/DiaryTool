@@ -84,7 +84,7 @@ public class MainController {
         context.register("ContentPane", drawer.getContent().get(0));
 
         // side controller will add links to the content flow
-        Flow sideMenuFlow = new Flow(MenuController.class);
+        Flow sideMenuFlow = new Flow(SideMenuController.class);
         final FlowHandler sideMenuFlowHandler = sideMenuFlow.createHandler(context);
         drawer.setSidePane(sideMenuFlowHandler.start(new ExtendedAnimatedFlowContainer(containerAnimationDuration,
                 SWIPE_LEFT)));

@@ -58,21 +58,21 @@
 
                     <JFXTextField fx:id="exerciseTextField" promptText="运动(-5-5)" alignment="CENTER" />
 
-                    <JFXTextField fx:id="workTextField" promptText="上班投入(-5-5)" alignment="CENTER" />
+                    <JFXTextField fx:id="workTextField" promptText="上班投入(-10-10)" alignment="CENTER" />
                 </HBox>
 
                 <HBox prefHeight="50">
-                    <JFXTextField fx:id="learnTextField" promptText="学习(-5-5)" alignment="CENTER" />
+                    <JFXTextField fx:id="studyTextField" promptText="学习(-5-5)" alignment="CENTER" />
 
                     <JFXTextField fx:id="readNewsTextField" promptText="浏览新闻(-3-3)" alignment="CENTER" />
 
-                    <JFXTextField fx:id="LOLTextField" promptText="LOL(-5~5)" alignment="CENTER" />
+                    <JFXTextField fx:id="lolTextField" promptText="LOL(-5~5)" alignment="CENTER" />
                 </HBox>
 
                 <HBox prefHeight="50">
                     <JFXTextField fx:id="sleepTextField" promptText="早睡(-3-3)" alignment="CENTER" />
 
-                    <JFXTextField fx:id="eatTextField" promptText="规律饮食(-2-2)" alignment="CENTER" />
+                    <JFXTextField fx:id="dietTextField" promptText="规律饮食(-2-2)" alignment="CENTER" />
 
                     <Label>总分：</Label>
                     <Label fx:id="totalLabel">0</Label>
@@ -87,11 +87,11 @@
             <ArrayList fx:id="textFieldList">
                 <fx:reference source="exerciseTextField"/>
                 <fx:reference source="workTextField"/>
-                <fx:reference source="learnTextField"/>
+                <fx:reference source="studyTextField"/>
                 <fx:reference source="readNewsTextField"/>
-                <fx:reference source="LOLTextField"/>
+                <fx:reference source="lolTextField"/>
                 <fx:reference source="sleepTextField"/>
-                <fx:reference source="eatTextField"/>
+                <fx:reference source="dietTextField"/>
             </ArrayList>
         </fx:define>
 
