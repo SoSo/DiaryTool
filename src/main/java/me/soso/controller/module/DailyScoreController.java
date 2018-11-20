@@ -1,7 +1,9 @@
 package me.soso.controller.module;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXTextField;
 import io.datafx.controller.FXMLController;
 import javafx.fxml.FXML;
@@ -45,6 +47,15 @@ public class DailyScoreController {
     @FXML
     private List<JFXTextField> textFieldList;
 
+    @FXML
+    private JFXDialog dialog;
+
+    @FXML
+    private Label dialogTitleLabel;
+
+    @FXML
+    private Label dialogMsgLabel;
+
     @PostConstruct
     public void init() {
         for (JFXTextField textField : textFieldList) {
@@ -52,6 +63,8 @@ public class DailyScoreController {
                 textChanged();
             });
         }
+
+        AVObject.registerSubclass(DailyScore.class);
     }
 
     public void textChanged() {
@@ -81,11 +94,24 @@ public class DailyScoreController {
             dailyScore.setSleep(Integer.valueOf(sleepTextField.getText()));
             dailyScore.setDiet(Integer.valueOf(dietTextField.getText()));
 
-            System.out.println(dailyScore.toString());
-//            dailyScore.save();
+            dailyScore.save();
+            showDialog("成功", dailyScore.toString());
         } catch (NumberFormatException e) {
+            showDialog("错误", e.getMessage());
+            e.printStackTrace();
+        } catch (AVException e) {
+            showDialog("错误", e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            showDialog("错误", e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private void showDialog(String title, String msg) {
+        dialogTitleLabel.setText(title);
+        dialogMsgLabel.setText(msg);
+        dialog.show();
     }
 
 }

@@ -72,7 +72,7 @@ public class ApplicationConfig {
         }
 
         switch (type) {
-            case "leancloud": {
+            case "leanStorage": {
                 String appID = properties.get("appID").toString();
                 String appKey = properties.get("appKey").toString();
                 String masterKey = properties.get("masterKey").toString();

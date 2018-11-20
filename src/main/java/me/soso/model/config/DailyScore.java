@@ -7,6 +7,7 @@ import java.util.Date;
 
 @AVClassName(value = "DailyScore")
 public class DailyScore extends AVObject {
+    public static final Creator CREATOR = AVObjectCreator.instance;
 
     public static final String DATE = "date";
     public static final String EXERCISE = "exercise";
@@ -16,6 +17,10 @@ public class DailyScore extends AVObject {
     public static final String LOL = "lol";
     public static final String SLEEP = "sleep";
     public static final String DIET = "diet";
+
+    public DailyScore() {
+
+    }
 
     public Date getDate() {
         return getDate(DATE);
