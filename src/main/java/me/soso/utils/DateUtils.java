@@ -1,5 +1,6 @@
 package me.soso.utils;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,5 +23,16 @@ public class DateUtils {
 
     public static LocalDateTime asLocalDateTime(Date date) {
         return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
+    }
+
+    public static String dateFormat(Date date) {
+        return dateFormat(date, null);
+    }
+
+    public static String dateFormat(Date date, String pattern) {
+        if (pattern == null) {
+            pattern = "yyyy-MM-dd";
+        }
+        return new SimpleDateFormat(pattern).format(date);
     }
 }

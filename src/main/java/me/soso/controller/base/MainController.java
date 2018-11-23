@@ -21,6 +21,11 @@ import static io.datafx.controller.flow.container.ContainerAnimations.SWIPE_LEFT
 @FXMLController(value = "/fxml/base/Main.fxml", title = "日记本")
 public class MainController {
 
+    public static final String CONTENT_FLOW_HANDLER = "ContentFlowHandler";
+    public static final String CONTENT_FLOW = "ContentFlow";
+    public static final String CONTENT_PANE = "ContentPane";
+    public static final String DIALOG = "Dialog";
+
     @FXMLViewFlowContext
     private ViewFlowContext context;
 
@@ -75,13 +80,19 @@ public class MainController {
         context = new ViewFlowContext();
         // set the default controller
         Flow innerFlow = new Flow(HomeController.class);
-
         final FlowHandler flowHandler = innerFlow.createHandler(context);
-        context.register("ContentFlowHandler", flowHandler);
-        context.register("ContentFlow", innerFlow);
+        context.register(CONTENT_FLOW_HANDLER, flowHandler);
+        context.register(CONTENT_FLOW, innerFlow);
         final Duration containerAnimationDuration = Duration.millis(320);
         drawer.setContent(flowHandler.start(new ExtendedAnimatedFlowContainer(containerAnimationDuration, SWIPE_LEFT)));
-        context.register("ContentPane", drawer.getContent().get(0));
+        context.register(CONTENT_PANE, drawer.getContent().get(0));
+
+        // 注册对话弹窗
+        loader = new FXMLLoader(getClass().getResource("/fxml/base/Dialog.fxml"));
+        loader.load();
+        DialogController dialogController = loader.getController();
+        dialogController.setDialogContainer((StackPane) drawer.getContent().get(0));
+        context.register(DIALOG, dialogController);
 
         // side controller will add links to the content flow
         Flow sideMenuFlow = new Flow(SideMenuController.class);

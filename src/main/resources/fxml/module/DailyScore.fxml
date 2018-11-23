@@ -98,21 +98,4 @@
         </fx:define>
 
     </SplitPane>
-
-    <JFXDialog fx:id="dialog" transitionType="CENTER">
-        <JFXDialogLayout>
-            <heading>
-                <Label fx:id="dialogTitleLabel"></Label>
-            </heading>
-            <body>
-                <Label fx:id="dialogMsgLabel">
-                </Label>
-            </body>
-            <actions>
-                <JFXButton fx:id="acceptButton" styleClass="dialog-accept">好的
-                </JFXButton>
-            </actions>
-        </JFXDialogLayout>
-    </JFXDialog>
-
 </StackPane>

@@ -6,17 +6,26 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXTextField;
 import io.datafx.controller.FXMLController;
+import io.datafx.controller.flow.context.FXMLViewFlowContext;
+import io.datafx.controller.flow.context.ViewFlowContext;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 
+import javafx.scene.layout.StackPane;
+import me.soso.controller.base.DialogController;
+import me.soso.controller.base.MainController;
 import me.soso.model.config.DailyScore;
 import me.soso.utils.DateUtils;
 
 @FXMLController(value = "/fxml/module/DailyScore.fxml", title = "每日评分表")
 public class DailyScoreController {
+
+    @FXMLViewFlowContext
+    private ViewFlowContext context;
+
     @FXML
     private JFXDatePicker datePicker;
 
@@ -47,14 +56,7 @@ public class DailyScoreController {
     @FXML
     private List<JFXTextField> textFieldList;
 
-    @FXML
-    private JFXDialog dialog;
-
-    @FXML
-    private Label dialogTitleLabel;
-
-    @FXML
-    private Label dialogMsgLabel;
+    private DialogController dialog;
 
     @PostConstruct
     public void init() {
@@ -65,6 +67,8 @@ public class DailyScoreController {
         }
 
         AVObject.registerSubclass(DailyScore.class);
+
+        dialog = (DialogController) context.getRegisteredObject(MainController.DIALOG);
     }
 
     public void textChanged() {
@@ -95,23 +99,17 @@ public class DailyScoreController {
             dailyScore.setDiet(Integer.valueOf(dietTextField.getText()));
 
             dailyScore.save();
-            showDialog("成功", dailyScore.toString());
+            dialog.showDialog("成功", dailyScore.toString());
         } catch (NumberFormatException e) {
-            showDialog("错误", e.getMessage());
+            dialog.showDialog("错误", e.getMessage());
             e.printStackTrace();
         } catch (AVException e) {
-            showDialog("错误", e.getMessage());
+            dialog.showDialog("错误", e.getMessage());
             e.printStackTrace();
         } catch (Exception e) {
-            showDialog("错误", e.getMessage());
+            dialog.showDialog("错误", e.getMessage());
             e.printStackTrace();
         }
-    }
-
-    private void showDialog(String title, String msg) {
-        dialogTitleLabel.setText(title);
-        dialogMsgLabel.setText(msg);
-        dialog.show();
     }
 
 }

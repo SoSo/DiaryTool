@@ -2,6 +2,7 @@ package me.soso.model.config;
 
 import com.avos.avoscloud.AVClassName;
 import com.avos.avoscloud.AVObject;
+import me.soso.utils.DateUtils;
 
 import java.util.Date;
 
@@ -84,5 +85,24 @@ public class DailyScore extends AVObject {
 
     public void setDiet(int diet) {
         put(DIET, diet);
+    }
+
+    public int getTotalScore() {
+        return getExercise() + getWork() + getStudy() + getReadNews() + getLol() + getSleep() + getDiet();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("日期：" + DateUtils.dateFormat(getDate()));
+        stringBuilder.append("\n运动：" + getExercise());
+        stringBuilder.append("\n工作：" + getWork());
+        stringBuilder.append("\n学习：" + getStudy());
+        stringBuilder.append("\n浏览新闻：" + getReadNews());
+        stringBuilder.append("\nLOL：" + getLol());
+        stringBuilder.append("\n早睡：" + getSleep());
+        stringBuilder.append("\n饮食规律：" + getDiet());
+        stringBuilder.append("\n总分：" + getTotalScore());
+        return stringBuilder.toString();
     }
 }

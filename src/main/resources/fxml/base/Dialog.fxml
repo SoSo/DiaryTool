@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+
+<?import com.jfoenix.controls.JFXDialog?>
+<?import com.jfoenix.controls.JFXDialogLayout?>
+<?import com.jfoenix.controls.JFXButton?>
+
+
+<?import javafx.scene.layout.StackPane?>
+<StackPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1"
+           xmlns="http://javafx.com/javafx/2.2" fx:controller="me.soso.controller.base.DialogController">
+    <JFXDialog fx:id="dialog" transitionType="CENTER">
+        <JFXDialogLayout alignment="CENTER">
+            <heading>
+                <Label fx:id="dialogTitleLabel"></Label>
+            </heading>
+            <body>
+                <Label fx:id="dialogMsgLabel">
+                </Label>
+            </body>
+            <actions>
+                <JFXButton fx:id="acceptButton" styleClass="dialog-accept">好的
+                </JFXButton>
+            </actions>
+        </JFXDialogLayout>
+    </JFXDialog>
+</StackPane>
