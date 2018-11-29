@@ -94,7 +94,7 @@ public class DailyScore extends AVObject {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("日期：" + DateUtils.dateFormat(getDate()));
+        stringBuilder.append("\n{日期：" + DateUtils.dateFormat(getDate()));
         stringBuilder.append("\n运动：" + getExercise());
         stringBuilder.append("\n工作：" + getWork());
         stringBuilder.append("\n学习：" + getStudy());
@@ -103,6 +103,7 @@ public class DailyScore extends AVObject {
         stringBuilder.append("\n早睡：" + getSleep());
         stringBuilder.append("\n饮食规律：" + getDiet());
         stringBuilder.append("\n总分：" + getTotalScore());
+        stringBuilder.append("\n}");
         return stringBuilder.toString();
     }
 }

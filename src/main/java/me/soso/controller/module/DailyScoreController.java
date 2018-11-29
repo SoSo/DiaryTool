@@ -2,22 +2,28 @@ package me.soso.controller.module;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXTextField;
+import com.avos.avoscloud.AVQuery;
+import com.jfoenix.controls.*;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import io.datafx.controller.FXMLController;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.function.Function;
 
+import javafx.scene.control.TreeTableColumn;
 import javafx.scene.layout.StackPane;
 import me.soso.controller.base.DialogController;
 import me.soso.controller.base.MainController;
 import me.soso.model.config.DailyScore;
+import me.soso.model.config.DailyScoreTreeObject;
 import me.soso.utils.DateUtils;
 
 @FXMLController(value = "/fxml/module/DailyScore.fxml", title = "每日评分表")
@@ -27,32 +33,44 @@ public class DailyScoreController {
     private ViewFlowContext context;
 
     @FXML
-    private JFXDatePicker datePicker;
+    private JFXTreeTableView<DailyScoreTreeObject> treeTableView;
+    @FXML
+    private JFXTreeTableColumn<DailyScoreTreeObject, String> dateColumn;
+    @FXML
+    private JFXTreeTableColumn<DailyScoreTreeObject, Integer> exerciseColumn;
+    @FXML
+    private JFXTreeTableColumn<DailyScoreTreeObject, Integer> workColumn;
+    @FXML
+    private JFXTreeTableColumn<DailyScoreTreeObject, Integer> studyColumn;
+    @FXML
+    private JFXTreeTableColumn<DailyScoreTreeObject, Integer> readNewsColumn;
+    @FXML
+    private JFXTreeTableColumn<DailyScoreTreeObject, Integer> lolColumn;
+    @FXML
+    private JFXTreeTableColumn<DailyScoreTreeObject, Integer> sleepColumn;
+    @FXML
+    private JFXTreeTableColumn<DailyScoreTreeObject, Integer> dietColumn;
+    @FXML
+    private JFXTreeTableColumn<DailyScoreTreeObject, Integer> totalColumn;
 
+    @FXML
+    private JFXDatePicker datePicker;
     @FXML
     private JFXTextField exerciseTextField;
-
     @FXML
     private JFXTextField workTextField;
-
     @FXML
     private JFXTextField studyTextField;
-
     @FXML
     private JFXTextField readNewsTextField;
-
     @FXML
     private JFXTextField lolTextField;
-
     @FXML
     private JFXTextField sleepTextField;
-
     @FXML
     private JFXTextField dietTextField;
-
     @FXML
     private Label totalLabel;
-
     @FXML
     private List<JFXTextField> textFieldList;
 
@@ -69,9 +87,11 @@ public class DailyScoreController {
         AVObject.registerSubclass(DailyScore.class);
 
         dialog = (DialogController) context.getRegisteredObject(MainController.DIALOG);
+
+        initTableView();
     }
 
-    public void textChanged() {
+    private void textChanged() {
         int totalScore = 0;
         for (JFXTextField textField : textFieldList) {
             String text = textField.getText();
@@ -84,6 +104,46 @@ public class DailyScoreController {
             }
         }
         totalLabel.setText(String.valueOf(totalScore));
+    }
+
+    private void initTableView() {
+        setupCellValueFactory(dateColumn, DailyScoreTreeObject::dateProperty);
+        setupCellValueFactory(exerciseColumn, d -> d.exerciseProperty().asObject());
+        setupCellValueFactory(workColumn, d -> d.workProperty().asObject());
+        setupCellValueFactory(studyColumn, d -> d.studyProperty().asObject());
+        setupCellValueFactory(readNewsColumn, d -> d.readNewsProperty().asObject());
+        setupCellValueFactory(lolColumn, d -> d.lolProperty().asObject());
+        setupCellValueFactory(sleepColumn, d -> d.sleepProperty().asObject());
+        setupCellValueFactory(dietColumn, d -> d.dietProperty().asObject());
+        setupCellValueFactory(totalColumn, d -> d.totalProperty().asObject());
+
+        final ObservableList<DailyScoreTreeObject> list = FXCollections.observableArrayList();
+
+        try {
+            AVQuery<DailyScore> query = new AVQuery<>("DailyScore");
+            query.orderByDescending(DailyScore.DATE);
+            List<DailyScore> dailyScores = query.find();
+            for (DailyScore dailyScore: dailyScores) {
+                DailyScoreTreeObject treeObject = new DailyScoreTreeObject(dailyScore);
+                list.add(treeObject);
+            }
+        } catch (AVException e) {
+            e.printStackTrace();
+        }
+
+        treeTableView.setRoot(new RecursiveTreeItem<>(list, RecursiveTreeObject::getChildren));
+        treeTableView.setShowRoot(false);
+    }
+
+    private <T> void setupCellValueFactory(JFXTreeTableColumn<DailyScoreTreeObject, T> column,
+                                           Function<DailyScoreTreeObject, ObservableValue<T>> mapper) {
+        column.setCellValueFactory((TreeTableColumn.CellDataFeatures<DailyScoreTreeObject, T> param) -> {
+            if (column.validateValue(param)) {
+                return mapper.apply(param.getValue().getValue());
+            } else {
+                return column.getComputedValue(param);
+            }
+        });
     }
 
     public void submit() {

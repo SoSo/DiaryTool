@@ -23,32 +23,32 @@
 
         <JFXTreeTableView fx:id="treeTableView" minHeight="200" maxHeight="300" prefHeight="300">
             <columns>
-                <JFXTreeTableColumn fx:id="date"
-                                    minWidth="150" text="日期"
+                <JFXTreeTableColumn fx:id="dateColumn"
+                                    minWidth="120" text="日期"
                                     resizable="false" />
-                <JFXTreeTableColumn fx:id="exercise"
-                                    minWidth="75" text="运动"
+                <JFXTreeTableColumn fx:id="exerciseColumn"
+                                    minWidth="80" text="运动"
                                     resizable="false" />
-                <JFXTreeTableColumn fx:id="work"
-                                    minWidth="75" text="上班投入"
+                <JFXTreeTableColumn fx:id="workColumn"
+                                    minWidth="80" text="上班投入"
                                     resizable="false" />
-                <JFXTreeTableColumn fx:id="learn"
-                                    minWidth="75" text="学习"
+                <JFXTreeTableColumn fx:id="studyColumn"
+                                    minWidth="80" text="学习"
                                     resizable="false" />
-                <JFXTreeTableColumn fx:id="readNews"
-                                    minWidth="75" text="浏览新闻"
+                <JFXTreeTableColumn fx:id="readNewsColumn"
+                                    minWidth="80" text="浏览新闻"
                                     resizable="false" />
-                <JFXTreeTableColumn fx:id="LOL"
-                                    minWidth="75" text="LOL"
+                <JFXTreeTableColumn fx:id="lolColumn"
+                                    minWidth="80" text="LOL"
                                     resizable="false" />
-                <JFXTreeTableColumn fx:id="sleep"
-                                    minWidth="75" text="早睡"
+                <JFXTreeTableColumn fx:id="sleepColumn"
+                                    minWidth="80" text="早睡"
                                     resizable="false" />
-                <JFXTreeTableColumn fx:id="eat"
-                                    minWidth="75" text="规律饮食"
+                <JFXTreeTableColumn fx:id="dietColumn"
+                                    minWidth="80" text="规律饮食"
                                     resizable="false" />
-                <JFXTreeTableColumn fx:id="total"
-                                    minWidth="75" text="总分"
+                <JFXTreeTableColumn fx:id="totalColumn"
+                                    minWidth="80" text="总分"
                                     resizable="false" />
             </columns>
         </JFXTreeTableView>
