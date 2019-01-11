@@ -15,8 +15,7 @@
 <?import javafx.scene.shape.Box?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import java.util.ArrayList?>
-<?import com.jfoenix.controls.JFXDialog?>
-<?import com.jfoenix.controls.JFXDialogLayout?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <StackPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1"
            xmlns="http://javafx.com/javafx/2.2">
     <SplitPane dividerPositions="50" orientation="VERTICAL">
@@ -58,7 +57,13 @@
                 <HBox prefHeight="50">
                     <JFXDatePicker fx:id="datePicker" promptText="日期" />
 
-                    <JFXTextField fx:id="exerciseTextField" promptText="运动(-5-5)" alignment="CENTER" />
+                    <JFXTextField fx:id="exerciseTextField" promptText="运动(-5-5)" alignment="CENTER">
+                        <validators>
+                            <RequiredFieldValidator message="Input Required!">
+                                <FontAwesomeIcon glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                            </RequiredFieldValidator>
+                        </validators>
+                    </JFXTextField>
 
                     <JFXTextField fx:id="workTextField" promptText="上班投入(-10-10)" alignment="CENTER" />
                 </HBox>

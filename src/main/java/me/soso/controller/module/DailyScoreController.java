@@ -12,13 +12,15 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 
 import javax.annotation.PostConstruct;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
-import javafx.scene.control.TreeTableColumn;
 import javafx.scene.layout.StackPane;
 import me.soso.controller.base.DialogController;
 import me.soso.controller.base.MainController;
@@ -76,6 +78,12 @@ public class DailyScoreController {
 
     private DialogController dialog;
 
+    private final ObservableList<DailyScoreTreeObject> treeObjectList = FXCollections.observableArrayList();
+    /** 全部日常评分数据的数组 */
+    private List<DailyScore> dailyScores;
+    /** 存储日期yyyy-MM-dd与日常评分的Map，用于添加数据时校验日期重复数据 */
+    private Map<String, DailyScore> dailyScoreMap;
+
     @PostConstruct
     public void init() {
         for (JFXTextField textField : textFieldList) {
@@ -117,22 +125,25 @@ public class DailyScoreController {
         setupCellValueFactory(dietColumn, d -> d.dietProperty().asObject());
         setupCellValueFactory(totalColumn, d -> d.totalProperty().asObject());
 
-        final ObservableList<DailyScoreTreeObject> list = FXCollections.observableArrayList();
-
         try {
             AVQuery<DailyScore> query = new AVQuery<>("DailyScore");
             query.orderByDescending(DailyScore.DATE);
-            List<DailyScore> dailyScores = query.find();
+            this.dailyScores = query.find();
+            this.dailyScoreMap = new HashMap<>();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             for (DailyScore dailyScore: dailyScores) {
+                this.dailyScoreMap.put(simpleDateFormat.format(dailyScore.getDate()), dailyScore);
                 DailyScoreTreeObject treeObject = new DailyScoreTreeObject(dailyScore);
-                list.add(treeObject);
+                this.treeObjectList.add(treeObject);
             }
         } catch (AVException e) {
             e.printStackTrace();
         }
 
-        treeTableView.setRoot(new RecursiveTreeItem<>(list, RecursiveTreeObject::getChildren));
-        treeTableView.setShowRoot(false);
+        this.treeTableView.setRoot(new RecursiveTreeItem<>(this.treeObjectList, RecursiveTreeObject::getChildren));
+        this.treeTableView.setShowRoot(false);
+        this.dateColumn.setSortType(TreeTableColumn.SortType.DESCENDING);
+        this.treeTableView.getSortOrder().add(dateColumn);
     }
 
     private <T> void setupCellValueFactory(JFXTreeTableColumn<DailyScoreTreeObject, T> column,
@@ -158,8 +169,19 @@ public class DailyScoreController {
             dailyScore.setSleep(Integer.valueOf(sleepTextField.getText()));
             dailyScore.setDiet(Integer.valueOf(dietTextField.getText()));
 
-            dailyScore.save();
-            dialog.showDialog("成功", dailyScore.toString());
+            // 判断是否日期已存在
+            String dateStr = DateUtils.dateFormat(dailyScore.getDate());
+            if (dailyScoreMap.get(dateStr) == null) {
+                dailyScore.save();
+                this.dailyScores.add(dailyScore);
+                this.dailyScoreMap.put(dateStr, dailyScore);
+                DailyScoreTreeObject treeObject = new DailyScoreTreeObject(dailyScore);
+                this.treeObjectList.add(0, treeObject);
+                this.treeTableView.sort();
+                dialog.showDialog("成功", dailyScore.toString());
+            } else {
+                dialog.showDialog("失败", dateStr + "日期已存在");
+            }
         } catch (NumberFormatException e) {
             dialog.showDialog("错误", e.getMessage());
             e.printStackTrace();
