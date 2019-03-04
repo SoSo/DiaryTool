@@ -1,4 +1,4 @@
-package me.soso.model.config;
+package me.soso.model.config.score;
 
 import com.avos.avoscloud.AVClassName;
 import com.avos.avoscloud.AVObject;
@@ -94,7 +94,8 @@ public class DailyScore extends AVObject {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("\n{日期：" + DateUtils.dateFormat(getDate()));
+        stringBuilder.append("\n{");
+        stringBuilder.append("\n日期：" + DateUtils.dateFormat(getDate()));
         stringBuilder.append("\n运动：" + getExercise());
         stringBuilder.append("\n工作：" + getWork());
         stringBuilder.append("\n学习：" + getStudy());

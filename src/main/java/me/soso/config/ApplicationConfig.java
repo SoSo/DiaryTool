@@ -9,6 +9,7 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
@@ -32,9 +33,7 @@ public class ApplicationConfig {
 
     public static void load(String location) throws Exception {
         SAXReader reader = new SAXReader();
-        URL resource = shareInstance().getClass().getClassLoader().getResource(location);
-        File file = new File(resource.getFile());
-        Document document = reader.read(file);
+        Document document = reader.read(shareInstance().getClass().getClassLoader().getResourceAsStream(location));
         Element root = document.getRootElement();
 
         Iterator it = root.elementIterator();

@@ -12,18 +12,20 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 
 import javax.annotation.PostConstruct;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.layout.StackPane;
 import me.soso.controller.base.DialogController;
 import me.soso.controller.base.MainController;
-import me.soso.model.config.DailyScore;
-import me.soso.model.config.DailyScoreTreeObject;
+import me.soso.model.config.score.DailyScore;
+import me.soso.model.config.score.DailyScoreManager;
+import me.soso.model.config.score.DailyScoreTreeObject;
 import me.soso.utils.DateUtils;
 
 @FXMLController(value = "/fxml/module/DailyScore.fxml", title = "每日评分表")
@@ -72,9 +74,17 @@ public class DailyScoreController {
     @FXML
     private Label totalLabel;
     @FXML
+    private Label weekStatisticsLabel;
+    @FXML
+    private Label monthStatisticsLabel;
+    @FXML
     private List<JFXTextField> textFieldList;
 
     private DialogController dialog;
+
+    private final ObservableList<DailyScoreTreeObject> treeObjectList = FXCollections.observableArrayList();
+
+    private DailyScoreManager dailyScoreManager = DailyScoreManager.getSharedManager();
 
     @PostConstruct
     public void init() {
@@ -84,11 +94,10 @@ public class DailyScoreController {
             });
         }
 
-        AVObject.registerSubclass(DailyScore.class);
-
         dialog = (DialogController) context.getRegisteredObject(MainController.DIALOG);
 
-        initTableView();
+        this.initTableView();
+        this.statistics();
     }
 
     private void textChanged() {
@@ -117,22 +126,15 @@ public class DailyScoreController {
         setupCellValueFactory(dietColumn, d -> d.dietProperty().asObject());
         setupCellValueFactory(totalColumn, d -> d.totalProperty().asObject());
 
-        final ObservableList<DailyScoreTreeObject> list = FXCollections.observableArrayList();
-
-        try {
-            AVQuery<DailyScore> query = new AVQuery<>("DailyScore");
-            query.orderByDescending(DailyScore.DATE);
-            List<DailyScore> dailyScores = query.find();
-            for (DailyScore dailyScore: dailyScores) {
-                DailyScoreTreeObject treeObject = new DailyScoreTreeObject(dailyScore);
-                list.add(treeObject);
-            }
-        } catch (AVException e) {
-            e.printStackTrace();
+        for (DailyScore dailyScore: dailyScoreManager.getDailyScores()) {
+            DailyScoreTreeObject treeObject = new DailyScoreTreeObject(dailyScore);
+            treeObjectList.add(treeObject);
         }
 
-        treeTableView.setRoot(new RecursiveTreeItem<>(list, RecursiveTreeObject::getChildren));
+        treeTableView.setRoot(new RecursiveTreeItem<>(treeObjectList, RecursiveTreeObject::getChildren));
         treeTableView.setShowRoot(false);
+        dateColumn.setSortType(TreeTableColumn.SortType.DESCENDING);
+        treeTableView.getSortOrder().add(dateColumn);
     }
 
     private <T> void setupCellValueFactory(JFXTreeTableColumn<DailyScoreTreeObject, T> column,
@@ -144,6 +146,16 @@ public class DailyScoreController {
                 return column.getComputedValue(param);
             }
         });
+    }
+
+    public void statistics() {
+        String weekStatisticsText = "本周已统计" + dailyScoreManager.getCurWeekDays() + "天，总共"
+                + dailyScoreManager.getCurWeekTotalScore() + "分，日均" + dailyScoreManager.getCurWeekAvgScore() + "分";
+        weekStatisticsLabel.setText(weekStatisticsText);
+
+        String monthStatisticsText = "本月已统计" + dailyScoreManager.getCurMonthDays() + "天，总共"
+                + dailyScoreManager.getCurMonthTotalScore() + "分，日均" + dailyScoreManager.getCurMonthAvgScore() + "分";
+        monthStatisticsLabel.setText(monthStatisticsText);
     }
 
     public void submit() {
@@ -158,12 +170,15 @@ public class DailyScoreController {
             dailyScore.setSleep(Integer.valueOf(sleepTextField.getText()));
             dailyScore.setDiet(Integer.valueOf(dietTextField.getText()));
 
-            dailyScore.save();
-            dialog.showDialog("成功", dailyScore.toString());
+            if (dailyScoreManager.add(dailyScore)) {
+                DailyScoreTreeObject treeObject = new DailyScoreTreeObject(dailyScore);
+                treeObjectList.add(0, treeObject);
+                treeTableView.sort();
+                dialog.showDialog("成功", dailyScore.toString());
+            } else {
+                dialog.showDialog("失败", dailyScore.getDate().toString() + "日期已存在");
+            }
         } catch (NumberFormatException e) {
-            dialog.showDialog("错误", e.getMessage());
-            e.printStackTrace();
-        } catch (AVException e) {
             dialog.showDialog("错误", e.getMessage());
             e.printStackTrace();
         } catch (Exception e) {

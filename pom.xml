@@ -17,6 +17,15 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.zenjava</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>8.8.3</version>
+                <configuration>
+                    <vendor>许桂斌</vendor>
+                    <mainClass>me.soso.MainApp</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

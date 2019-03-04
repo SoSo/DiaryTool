@@ -1,4 +1,4 @@
-package me.soso.model.config;
+package me.soso.model.config.score;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.beans.property.IntegerProperty;

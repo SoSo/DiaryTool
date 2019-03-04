@@ -1,6 +1,7 @@
 package me.soso.config.module;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
@@ -15,9 +16,7 @@ public class XmlModulesLoader extends AbstractModulesLoader {
     @Override
     public List<Module> loadModules(String location) throws Exception {
         SAXReader reader = new SAXReader();
-        URL resource = this.getClass().getClassLoader().getResource(location);
-        File file = new File(resource.getFile());
-        Document document = reader.read(file);
+        Document document = reader.read(this.getClass().getClassLoader().getResourceAsStream(location));
         Element root = document.getRootElement();
 
         Iterator it = root.elementIterator();
