@@ -15,10 +15,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import javax.annotation.PostConstruct;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 
 import me.soso.controller.base.DialogController;
